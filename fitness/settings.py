@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import dj_database_url
 import os
 
-ROOT_URLCONF = 'boilerplate.urls'
-WSGI_APPLICATION = 'boilerplate.wsgi.application'
+ROOT_URLCONF = 'tracker.urls'
+WSGI_APPLICATION = 'fitness.wsgi.application'
 
 
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'whitenoise.runserver_nostatic',
     'widget_tweaks',
+    'tracker'
 ]
 
 MIDDLEWARE = [
