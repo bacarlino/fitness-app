@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import dj_database_url
 import os
 
-ROOT_URLCONF = 'tracker.urls'
+ROOT_URLCONF = 'fitness.urls'
 WSGI_APPLICATION = 'fitness.wsgi.application'
 
 
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'webpack_loader',
     'whitenoise.runserver_nostatic',
     'widget_tweaks',
-    'tracker'
+    'tracker',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            'builtins': [
+                'django.contrib.staticfiles.templatetags.staticfiles',
             ],
         },
     },
@@ -112,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/users/profile'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

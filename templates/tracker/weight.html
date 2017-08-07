@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Your current weight: <strong>{{ user.profile.current_weight }} lbs.</strong></h3>
+<hr />
+<form method="POST" action="">
+  {% csrf_token %}
+  {{ form }}
+<input type="submit" value="Submit" />
+</form>
+<hr />
+<h3>Weigh-In History</h3>
+
+
+
+<ul>
+  {% for weight in user.weight_set.all %}
+  <li><strong>{{ weight }}</strong> on {{ weight.created }}</li>
+  {% endfor %}
+</ul>
+
+
+
+{% endblock content %}

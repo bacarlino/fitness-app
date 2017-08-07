@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ workout }}</h1>
+  <p>Created by: {{ workout.creator }}</p>
+
+  <hr />
+  {% for sets in workout.sets_set.all %}
+  <p><strong>{{ sets.exercise }} > {{ sets.weight }} lbs > {{ sets.reps }} reps</strong></p>
+  <p>{{ set }}</p>
+  {% endfor %}
+{% endblock %}

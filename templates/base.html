@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% endblock meta%}
+  <title>
+      {% block title %}Fitness Tracker{% endblock title %}
+  </title>
+  {% block styles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'portfolio/styles/index.css' %}" />
+  {% endblock styles %}
+  {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% endblock scripts %}
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body>
+  {% include '_header.html' %}
+  {% block content %}{% endblock %}
+</body>
+</html>

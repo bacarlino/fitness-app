@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Workout List</h1>
+
+  {% if workout_list %}
+  <ul>
+    {% for workout in workout_list %}
+    <li>
+      <a href="{{ workout.get_absolute_url }}">{{ workout.name }}</a> by {{ workout.creator }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>There are no workouts to display.</p>
+  {% endif %}
+
+
+{% endblock %}
