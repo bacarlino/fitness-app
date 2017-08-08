@@ -1,6 +1,6 @@
 from django import forms
 from .models import Workout
-from tracker.models import Weight
+from users.models import Weight
 
 class WorkoutForm(forms.ModelForm):
     class Meta:

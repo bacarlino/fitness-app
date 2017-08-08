@@ -4,10 +4,12 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-from .models import Workout, Sets, Weight
+from .models import Workout, Sets
+from users.models import Weight
 from .forms import WorkoutForm, LogWeightForm
 from django.urls import reverse
 import datetime
+import numpy
 
 def track_weight(request):
     if request.method == 'POST':
@@ -23,8 +25,18 @@ def track_weight(request):
             request.user.save()
             return redirect('weight', permanent=True)
     else:
+        average = 0
+        weight_list = []
         form = LogWeightForm()
-    return render(request, 'tracker/weight.html', {'form': form})
+
+        weights = request.user.weight_set.all()
+        for weight in weights:
+            if weight.created.weekday() == 0:
+                break
+            else:
+                weight_list.append(float(weight.weight))
+        average = numpy.mean(weight_list)
+    return render(request, 'tracker/weight.html', {'form': form, 'average': float(average)})
 
 
 

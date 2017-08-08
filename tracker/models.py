@@ -37,12 +37,3 @@ class Muscle(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Weight(models.Model):
-    weight = models.IntegerField(null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created = models.DateField(null=True)
-
-    def __str__(self):
-        return str(self.weight) + ' lbs.'

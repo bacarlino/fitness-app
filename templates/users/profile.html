@@ -2,7 +2,12 @@
 {% block content %}
 
 <h1>Welcome - {{ user.username }}</h1>
-<h3>Current weight: {{ user.profile.current_weight }} lbs.</h3>
+<h3>
+Male<br />
+Height - {{ user.profile.height_feet }}' {{ user.profile.height_inches }}"<br />
+Current weight: {{ user.profile.current_weight }} lbs.
+</h3>
+
 <h3>Workouts:
   <ul>
   {% for workout in user.workout_set.all %}
