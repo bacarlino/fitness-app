@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Workout, Sets, Exercise, Muscle
-from users.models import Weight
+from .models import Workout, Sets, Exercise, Muscle, Weight
 
-# admin.site.register(Workout)
+
 admin.site.register(Sets)
 admin.site.register(Exercise)
 admin.site.register(Muscle)
 admin.site.register(Weight)
+
 
 class SetsInline(admin.TabularInline):
     model = Sets

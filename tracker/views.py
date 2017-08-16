@@ -1,44 +1,65 @@
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, render
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-from .models import Workout, Sets
-from users.models import Weight
+from .models import Workout, Sets, Weight
 from .forms import WorkoutForm, LogWeightForm
 from django.urls import reverse
 import datetime
-import numpy
+import pytz
+from decimal import *
 
 def track_weight(request):
+    average_day = 0
+    average_week = 0
+    getcontext().prec = 5
     if request.method == 'POST':
         form = LogWeightForm(request.POST)
         if form.is_valid():
             new_weight = Weight(
                 weight=form.cleaned_data['weight'],
-                user=request.user,
-                created=datetime.datetime.now()
+                user=request.user
                 )
             request.user.profile.current_weight = new_weight.weight
             new_weight.save()
-            request.user.save()
+            request.user.profile.save()
             return redirect('weight', permanent=True)
     else:
-        average = 0
-        weight_list = []
+        weeks_weight_list = []
+        todays_weight_list = []
         form = LogWeightForm()
-
         weights = request.user.weight_set.all()
         for weight in weights:
+            if weight.created.date() == datetime.datetime.now(pytz.utc).date():
+                todays_weight_list.append(weight.weight)
             if weight.created.weekday() == 0:
                 break
             else:
-                weight_list.append(float(weight.weight))
-        average = numpy.mean(weight_list)
-    return render(request, 'tracker/weight.html', {'form': form, 'average': float(average)})
+                weeks_weight_list.append(weight.weight)
 
+        if todays_weight_list:
+            average_day = sum(todays_weight_list)/len(todays_weight_list)
+        else:
+            average_day = request.user.profile.current_weight
 
+        if weeks_weight_list:
+            getcontext().prec = 5
+            average_week = sum(weeks_weight_list)/len(weeks_weight_list)
+        else:
+            average_week = request.user.profile.current_weight
+    return render(request, 'tracker/weight.html', {'form': form, 'average_day': average_day, 'average_week': average_week})
+
+def delete_weight(request, id):
+    weight = get_object_or_404(Weight, pk=id)
+    weight_set = request.user.weight_set.order_by('-created')
+    if weight == weight_set[0] and len(weight_set) > 1:
+        request.user.profile.current_weight = weight_set[1].weight
+    request.user.profile.save()
+    weight.delete()
+    return HttpResponseRedirect(reverse('weight'))
 
 
 class WorkoutListView(generic.ListView):

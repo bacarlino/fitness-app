@@ -123,7 +123,7 @@ LOGIN_REDIRECT_URL = '/users/profile'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Indiana/Indianapolis'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 

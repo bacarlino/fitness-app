@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+import datetime
 
 
 class Workout(models.Model):
@@ -37,3 +38,11 @@ class Muscle(models.Model):
 
     def __str__(self):
         return self.name
+
+class Weight(models.Model):
+    weight = models.DecimalField(max_digits=6, decimal_places=1, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(default=datetime.datetime.today())
+
+    def __str__(self):
+        return str(self.weight) + ' lbs.'

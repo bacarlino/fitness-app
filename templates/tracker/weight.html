@@ -3,23 +3,26 @@
 {% block content %}
 
 <h3>Your current weight: <strong>{{ user.profile.current_weight }} lbs.</strong></h3>
-<h4>Your average weight this week: <strong>{{ average }} lbs.</strong></h4>
+<h4>Your average weight today: <strong>{{ average_day }} lbs.</strong></h4>
+<h4>Your average weight this week: <strong>{{ average_week }} lbs.</strong></h4>
+
 <hr />
+
 <form method="POST" action="">
   {% csrf_token %}
   {{ form }}
 <input type="submit" value="Submit" />
 </form>
+
 <hr />
+
 <h3>Weigh-In History</h3>
-
-
 <ul>
   {% for weight in user.weight_set.all %}
-  <li><strong>{{ weight }}</strong> on {{ weight.created }}</li>
+  <li>
+    <strong>{{ weight }}</strong> on {{ weight.created }}
+    <a href='/delete/{{ weight.id }}'><button>Remove</button></a>
+  </li>
   {% endfor %}
 </ul>
-
-
-
 {% endblock content %}

@@ -10,6 +10,8 @@ urlpatterns = [
 
     url(r'^weight/$', views.track_weight, name='weight'),
 
+    url(r'^delete/(?P<id>\d+)/$', views.delete_weight, name='delete_weight'),
+
     url(r'^workouts/$', views.WorkoutListView.as_view(), name='workouts'),
 
     url(r'^workout/(?P<pk>[\d+]+)/$', views.WorkoutDetailView.as_view(), name='workout-detail'),
