@@ -1,11 +1,11 @@
 <div class="text-center">
-  <h1>Workout Tracker</h1>
+  <h1>Fitness Tracker</h1>
 
   {% if user.is_authenticated %}
     <h3>
       <a href="{% url 'profile' %}">Profile</a> |
       <a href="{% url 'weight' %}">Track Weight</a> |
-      <a href="{% url 'workouts' %}">View Workouts</a> |
+      <a href="{% url 'workouts' %}">View All Workouts</a> |
       <a href="{% url 'track' %}">Track A Workout</a> |
       <a href="{% url 'logout' %}">Logout</a>
     </h3>
