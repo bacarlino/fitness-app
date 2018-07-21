@@ -10,16 +10,18 @@ admin.site.register(Profile)
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
-    verbose_name_plural = 'profile'
+    verbose_name_plural = 'Profile'
 
 class WeightInline(admin.StackedInline):
     model = Weight
     can_delete = False
     extra = 0
 
+admin.site.unregister(User)
+@admin.register(User)
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline, WeightInline)
 
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+# admin.site.unregister(User)
+# admin.site.register(User, UserAdmin)

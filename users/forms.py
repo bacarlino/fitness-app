@@ -5,6 +5,18 @@ from .models import Profile
 
 
 class SignupForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,6 +29,7 @@ class SignupForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
+
     class Meta:
         model = Profile
         fields = ['current_weight', 'height_feet', 'height_inches', 'sex']
