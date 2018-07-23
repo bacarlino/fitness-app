@@ -17,6 +17,23 @@ class Profile(models.Model):
         ),
         null=True
     )
+    week_start_day = models.CharField(
+        max_length = 9,
+        choices = (
+            ('Monday', 'Monday'),
+            ('Tuesday', 'Tuesday'),
+            ('Wednesday', 'Wednesday'),
+            ('Thursday', 'Thursday'),
+            ('Friday', 'Friday'),
+            ('Saturday', 'Saturday'),
+            ('Sunday', 'Sunday')
+        ),
+        default = 'Monday',
+        null=True
+    )
+
+    def __str__(self):
+        return str(self.user)
 
     # @receiver(post_save, sender=User)
     # def create_user_profile(sender, instance, created, **kwargs):

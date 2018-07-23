@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 from .models import Workout, Sets, Weight
 from .forms import WorkoutForm, LogWeightForm
 from django.urls import reverse
+import calendar
 import datetime
 import pytz
 from decimal import *
@@ -16,6 +17,7 @@ def track_weight(request):
     average_day = 0
     average_week = 0
     getcontext().prec = 5
+
     if request.method == 'POST':
         form = LogWeightForm(request.POST)
         if form.is_valid():
@@ -27,11 +29,13 @@ def track_weight(request):
             new_weight.save()
             request.user.profile.save()
             return redirect('weight', permanent=True)
+
     else:
+        weights = request.user.weight_set.all()
         weeks_weight_list = []
         todays_weight_list = []
         form = LogWeightForm()
-        weights = request.user.weight_set.all()
+
         for weight in weights:
             if weight.created.date() == datetime.datetime.now(pytz.utc).date():
                 todays_weight_list.append(weight.weight)
@@ -51,6 +55,7 @@ def track_weight(request):
         else:
             average_week = request.user.profile.current_weight
     return render(request, 'tracker/weight.html', {'form': form, 'average_day': average_day, 'average_week': average_week})
+
 
 def delete_weight(request, id):
     weight = get_object_or_404(Weight, pk=id)

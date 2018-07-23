@@ -39,6 +39,7 @@ class Muscle(models.Model):
     def __str__(self):
         return self.name
 
+
 class Weight(models.Model):
     weight = models.DecimalField(max_digits=6, decimal_places=1, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
