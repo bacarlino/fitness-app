@@ -31,10 +31,17 @@ def track_weight(request):
             return redirect('weight', permanent=True)
 
     else:
-        weights = request.user.weight_set.all()
+        weights = request.user.weight_set.order_by('created')
         weeks_weight_list = []
         todays_weight_list = []
         form = LogWeightForm()
+
+        first_entry_date = weights[0].created
+        print(weights)
+        for weight in weights:
+            print(weight.created)
+        print('FIRST ENTRY DATE')
+        print(first_entry_date)
 
         for weight in weights:
             if weight.created.date() == datetime.datetime.now(pytz.utc).date():
@@ -103,3 +110,7 @@ class WorkoutCreate(generic.TemplateView):
             return HttpResponseRedirect('/')
         context = {'form': workout_form, 'formset': formset}
         return self.render_to_response(context)
+
+
+def extract_entrydate(entrydate):
+    pass
