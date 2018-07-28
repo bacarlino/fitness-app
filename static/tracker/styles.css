@@ -6,3 +6,25 @@ a {
 a:hover {
   text-decoration: none;
 }
+
+.exercise-link {
+  display: block;
+  /* width: 100%; */
+
+  border: 3px solid red;
+}
+
+.exercise-entry {
+  display: inline-block;
+  font-size: 20px;
+  text-align: center;
+  /* height: 50px; */
+  /* width: 300px; */
+  border: 2px solid;
+  margin: 2px;
+  padding: 2px;
+}
+
+.exercise-entry:hover {
+  background-color: skyblue;
+}

@@ -5,13 +5,27 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-from .models import Workout, Sets, Weight
-from .forms import WorkoutForm, LogWeightForm
+from .models import Workout, Sets, Weight, Exercise
+from .forms import WorkoutForm, LogWeightForm, ExerciseForm
 from django.urls import reverse
 import calendar
 import datetime
 import pytz
 from decimal import *
+
+class FlowCalendar(calendar.HTMLCalendar):
+
+    def formatmonth(self, year, month):
+        pass
+
+
+
+
+
+def view_calendar(request):
+    pass
+
+
 
 def track_weight(request):
     average_day = 0
@@ -35,6 +49,8 @@ def track_weight(request):
         weeks_weight_list = []
         todays_weight_list = []
         form = LogWeightForm()
+
+        cal = calendar.HTMLCalendar().formatmonth(2018, 8)
 
         first_entry_date = weights[0].created
         print(weights)
@@ -61,7 +77,7 @@ def track_weight(request):
             average_week = sum(weeks_weight_list)/len(weeks_weight_list)
         else:
             average_week = request.user.profile.current_weight
-    return render(request, 'tracker/weight.html', {'form': form, 'average_day': average_day, 'average_week': average_week})
+    return render(request, 'tracker/weight.html', {'form': form, 'average_day': average_day, 'average_week': average_week, 'cal': cal})
 
 
 def delete_weight(request, id):
@@ -84,6 +100,19 @@ class WorkoutDetailView(generic.DetailView):
 
 class WorkoutCreateView(CreateView):
     model = Workout
+    fields = ['name']
+
+
+class ExerciseListView(generic.ListView):
+    model = Exercise
+
+
+class ExerciseDetailView(generic.DetailView):
+    model = Exercise
+
+
+class ExerciseCreateView(CreateView):
+    model = Exercise
     fields = ['name']
 
 
@@ -112,5 +141,26 @@ class WorkoutCreate(generic.TemplateView):
         return self.render_to_response(context)
 
 
-def extract_entrydate(entrydate):
-    pass
+class ExerciseCreate(generic.TemplateView):
+    template_name = 'tracker/exercise_create.html'
+
+    def get(self, request, *args, **kwargs):
+        exercise_form = ExerciseForm()
+        # SetsFormSet = inlineformset_factory(Workout, Sets, fields=('weight', 'reps', 'exercise'), extra=1)
+        # formset = SetsFormSet()
+        context = {'form': exercise_form}
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        exercise_form = ExerciseForm(data=request.POST)
+        # SetsFormSet = inlineformset_factory(Workout, Sets, fields=('weight', 'reps', 'exercise'), extra=1)
+        # formset = SetsFormSet(data=request.POST)
+        if exercise_form.is_valid():
+            exercise = exercise_form.save()
+            # sets = formset.save(commit=False)
+            # for single_set in sets:
+            #     single_set.exercise = exercise
+            #     single_set.save()
+            return HttpResponseRedirect('/')
+        context = {'form': exercise_form}
+        return self.render_to_response(context)

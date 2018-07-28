@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'tracker/styles.css' %}" />
+
+  {% if exercise_list %}
+
+  <h1>Exercise Database</h1>
+  <hr />
+
+  <h4>All Exercises</h4>
+    {% for exercise in exercise_list %}
+    <!-- <div class="exercise-link"> -->
+      <a href="{{ exercise.get_absolute_url }}" class="exercise-entry">
+        <!-- <div class="exercise-entry"> -->
+          {{ exercise.name }}
+        <!-- </div> -->
+      </a>
+    <!-- </div> -->
+    {% endfor %}
+  <hr />
+
+  {% else %}
+  <p>There are no exercises to display.</p>
+  {% endif %}
+
+{% endblock %}

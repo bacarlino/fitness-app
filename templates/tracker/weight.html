@@ -16,6 +16,8 @@
 
 <hr />
 
+<!-- {{ cal|safe }} -->
+
 <h3>Weigh-In History</h3>
 <ul>
   {% for weight in user.weight_set.all %}
@@ -25,4 +27,8 @@
   </li>
   {% endfor %}
 </ul>
+
+
+
+
 {% endblock content %}

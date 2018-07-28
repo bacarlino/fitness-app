@@ -1,0 +1,32 @@
+
+Simple Fitness App
+
+-----------------
+
+Weight Tracking
+
+  - Week starts defaults to Monday (User can change)
+  - When a user enters a weight
+    - Check for a "Day" entry, create if needed
+    - Check for a "Week" entry, create if needed
+
+
+  Unlimited entries
+  Averages
+    Weekly
+        Uses each single "Daily" entry
+        User can customize starting week day
+    Daily
+        App automatically averages all daily entries
+  Graphs
+
+
+Measurement Tracking
+
+Fasting Tracking
+
+Food Tracking
+
+Exercise Database
+
+Workout Tracking
