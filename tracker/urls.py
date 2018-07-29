@@ -22,5 +22,5 @@ urlpatterns = [
 
     url(r'^track/$', views.WorkoutCreate.as_view(), name='track'),
 
-    url(r'^create-exercise/$', views.ExerciseCreate.as_view(), name='create-exercise')
+    url(r'^exercise-create/$', views.ExerciseCreate.as_view(), name='exercise-create')
 ]
